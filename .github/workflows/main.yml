@@ -22,10 +22,14 @@ jobs:
       - name: serverless deploy
         uses: serverless/github-action@master
         with:
-          args: -c "npm install && serverless deploy && curl -X POST https://wbwlc0c47f.execute-api.us-east-1.amazonaws.com/dev/setWebhook"
+          args: -c "npm install && serverless deploy"
           # args: -c "serverless plugin install --name serverless-plugin-typescript && serverless deploy"
           entrypoint: /bin/sh
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           SLS_DEBUG: 1
+      - name: curl
+        uses: wei/curl@v1
+        with:
+          args: -X POST https://wbwlc0c47f.execute-api.us-east-1.amazonaws.com/dev/setWebhook
