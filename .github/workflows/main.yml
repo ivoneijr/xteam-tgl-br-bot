@@ -19,10 +19,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: install plugin
-        uses: serverless/github-action@master
-        - run: serverless plugin install -n serverless-plugin-typescript
-
       - name: serverless deploy
         uses: serverless/github-action@master
         with:
