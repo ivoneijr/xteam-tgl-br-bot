@@ -22,7 +22,7 @@ jobs:
       - name: serverless deploy
         uses: serverless/github-action@master
         with:
-          args: -c "npm install && serverless deploy"
+          args: -c "npm install && serverless remove && serverless deploy"
           # args: -c "serverless plugin install --name serverless-plugin-typescript && serverless deploy"
           entrypoint: /bin/sh
         env:
