@@ -31,6 +31,10 @@ bot.command('ping', ctx => {
   return ctx.replyWithMarkdown('*Pong!*');
 });
 
+bot.command('hello', ctx => {
+  return ctx.replyWithMarkdown('*world!*');
+});
+
 bot.on('text', ctx => {
   return ctx.reply(ctx.message.text);
 });
