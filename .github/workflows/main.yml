@@ -21,6 +21,7 @@ jobs:
 
       - name: serverless deploy
         uses: serverless/github-action@master
+        - run: serverless plugin install -n serverless-plugin-typescript
         with:
           args: deploy
         env:
