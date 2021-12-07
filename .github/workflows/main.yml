@@ -23,7 +23,6 @@ jobs:
         uses: serverless/github-action@master
         with:
           args: -c "serverless plugin install --name serverless-plugin-typescript && serverless deploy"
-          entrypoint: /bin/bash
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
