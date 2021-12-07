@@ -1,0 +1,611 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "The AWS CloudFormation template for this Serverless application",
+  "Resources": {
+    "ServerlessDeploymentBucket": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "BucketEncryption": {
+          "ServerSideEncryptionConfiguration": [
+            {
+              "ServerSideEncryptionByDefault": {
+                "SSEAlgorithm": "AES256"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "ServerlessDeploymentBucketPolicy": {
+      "Type": "AWS::S3::BucketPolicy",
+      "Properties": {
+        "Bucket": {
+          "Ref": "ServerlessDeploymentBucket"
+        },
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": "s3:*",
+              "Effect": "Deny",
+              "Principal": "*",
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":s3:::",
+                      {
+                        "Ref": "ServerlessDeploymentBucket"
+                      },
+                      "/*"
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":s3:::",
+                      {
+                        "Ref": "ServerlessDeploymentBucket"
+                      }
+                    ]
+                  ]
+                }
+              ],
+              "Condition": {
+                "Bool": {
+                  "aws:SecureTransport": false
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "WebhookLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/xteam-tgl-br-bot-dev-webhook"
+      }
+    },
+    "SetDashwebhookLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/xteam-tgl-br-bot-dev-set-webhook"
+      }
+    },
+    "IamRoleLambdaExecution": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "lambda.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": {
+              "Fn::Join": [
+                "-",
+                [
+                  "xteam-tgl-br-bot",
+                  "dev",
+                  "lambda"
+                ]
+              ]
+            },
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:CreateLogGroup"
+                  ],
+                  "Resource": [
+                    {
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/xteam-tgl-br-bot-dev*:*"
+                    }
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:PutLogEvents"
+                  ],
+                  "Resource": [
+                    {
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/xteam-tgl-br-bot-dev*:*:*"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "Path": "/",
+        "RoleName": {
+          "Fn::Join": [
+            "-",
+            [
+              "xteam-tgl-br-bot",
+              "dev",
+              {
+                "Ref": "AWS::Region"
+              },
+              "lambdaRole"
+            ]
+          ]
+        }
+      }
+    },
+    "WebhookLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/xteam-tgl-br-bot/dev/1638855859023-2021-12-07T05:44:19.023Z/xteam-tgl-br-bot.zip"
+        },
+        "Handler": "functions/webhook.run",
+        "Runtime": "nodejs12.x",
+        "FunctionName": "xteam-tgl-br-bot-dev-webhook",
+        "MemorySize": 1024,
+        "Timeout": 6,
+        "Environment": {
+          "Variables": {
+            "BOT_TOKEN": "5034754222:AAF9fiuUsWzS7xQHM2JKL0f4F4juLbxp-FU"
+          }
+        },
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        }
+      },
+      "DependsOn": [
+        "WebhookLogGroup"
+      ]
+    },
+    "SetDashwebhookLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/xteam-tgl-br-bot/dev/1638855859023-2021-12-07T05:44:19.023Z/xteam-tgl-br-bot.zip"
+        },
+        "Handler": "functions/setWebHook.run",
+        "Runtime": "nodejs12.x",
+        "FunctionName": "xteam-tgl-br-bot-dev-set-webhook",
+        "MemorySize": 1024,
+        "Timeout": 6,
+        "Environment": {
+          "Variables": {
+            "BOT_TOKEN": "5034754222:AAF9fiuUsWzS7xQHM2JKL0f4F4juLbxp-FU"
+          }
+        },
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        }
+      },
+      "DependsOn": [
+        "SetDashwebhookLogGroup"
+      ]
+    },
+    "WebhookLambdaVersion4Sq6ErFgAE5bTYfSji3Wc6nPu0qjpFLEGy5D25dBU": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "WebhookLambdaFunction"
+        },
+        "CodeSha256": "gK+p42uEMYi/fj+MG35muD+X3LkAAKCGfKKQQ8wdHy0="
+      }
+    },
+    "SetDashwebhookLambdaVersionsD7vVdA7nJJWZ9YLou4lxpbryUBZe765jmJ50NhmAVI": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "SetDashwebhookLambdaFunction"
+        },
+        "CodeSha256": "gK+p42uEMYi/fj+MG35muD+X3LkAAKCGfKKQQ8wdHy0="
+      }
+    },
+    "ApiGatewayRestApi": {
+      "Type": "AWS::ApiGateway::RestApi",
+      "Properties": {
+        "Name": "dev-xteam-tgl-br-bot",
+        "EndpointConfiguration": {
+          "Types": [
+            "EDGE"
+          ]
+        },
+        "Policy": ""
+      }
+    },
+    "ApiGatewayResourceWebhook": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "ApiGatewayRestApi",
+            "RootResourceId"
+          ]
+        },
+        "PathPart": "webhook",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayResourceSetwebhook": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "ApiGatewayRestApi",
+            "RootResourceId"
+          ]
+        },
+        "PathPart": "setWebhook",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayMethodWebhookOptions": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "MethodResponses": [
+          {
+            "StatusCode": "200",
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true
+            },
+            "ResponseModels": {}
+          }
+        ],
+        "RequestParameters": {},
+        "Integration": {
+          "Type": "MOCK",
+          "RequestTemplates": {
+            "application/json": "{statusCode:200}"
+          },
+          "ContentHandling": "CONVERT_TO_TEXT",
+          "IntegrationResponses": [
+            {
+              "StatusCode": "200",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
+              },
+              "ResponseTemplates": {
+                "application/json": ""
+              }
+            }
+          ]
+        },
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceWebhook"
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayMethodSetwebhookOptions": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "MethodResponses": [
+          {
+            "StatusCode": "200",
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true
+            },
+            "ResponseModels": {}
+          }
+        ],
+        "RequestParameters": {},
+        "Integration": {
+          "Type": "MOCK",
+          "RequestTemplates": {
+            "application/json": "{statusCode:200}"
+          },
+          "ContentHandling": "CONVERT_TO_TEXT",
+          "IntegrationResponses": [
+            {
+              "StatusCode": "200",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
+              },
+              "ResponseTemplates": {
+                "application/json": ""
+              }
+            }
+          ]
+        },
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceSetwebhook"
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayMethodWebhookPost": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "POST",
+        "RequestParameters": {},
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceWebhook"
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        },
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "WebhookLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        },
+        "MethodResponses": []
+      },
+      "DependsOn": [
+        "WebhookLambdaPermissionApiGateway"
+      ]
+    },
+    "ApiGatewayMethodSetwebhookPost": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "POST",
+        "RequestParameters": {},
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceSetwebhook"
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        },
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "SetDashwebhookLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        },
+        "MethodResponses": []
+      },
+      "DependsOn": [
+        "SetDashwebhookLambdaPermissionApiGateway"
+      ]
+    },
+    "ApiGatewayDeployment1638855852870": {
+      "Type": "AWS::ApiGateway::Deployment",
+      "Properties": {
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        },
+        "StageName": "dev"
+      },
+      "DependsOn": [
+        "ApiGatewayMethodWebhookOptions",
+        "ApiGatewayMethodSetwebhookOptions",
+        "ApiGatewayMethodWebhookPost",
+        "ApiGatewayMethodSetwebhookPost"
+      ]
+    },
+    "WebhookLambdaPermissionApiGateway": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "WebhookLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "/*/*"
+            ]
+          ]
+        }
+      }
+    },
+    "SetDashwebhookLambdaPermissionApiGateway": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "SetDashwebhookLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "/*/*"
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "ServerlessDeploymentBucketName": {
+      "Value": {
+        "Ref": "ServerlessDeploymentBucket"
+      },
+      "Export": {
+        "Name": "sls-xteam-tgl-br-bot-dev-ServerlessDeploymentBucketName"
+      }
+    },
+    "WebhookLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "WebhookLambdaVersion4Sq6ErFgAE5bTYfSji3Wc6nPu0qjpFLEGy5D25dBU"
+      },
+      "Export": {
+        "Name": "sls-xteam-tgl-br-bot-dev-WebhookLambdaFunctionQualifiedArn"
+      }
+    },
+    "SetDashwebhookLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "SetDashwebhookLambdaVersionsD7vVdA7nJJWZ9YLou4lxpbryUBZe765jmJ50NhmAVI"
+      },
+      "Export": {
+        "Name": "sls-xteam-tgl-br-bot-dev-SetDashwebhookLambdaFunctionQualifiedArn"
+      }
+    },
+    "ServiceEndpoint": {
+      "Description": "URL of the service endpoint",
+      "Value": {
+        "Fn::Join": [
+          "",
+          [
+            "https://",
+            {
+              "Ref": "ApiGatewayRestApi"
+            },
+            ".execute-api.",
+            {
+              "Ref": "AWS::Region"
+            },
+            ".",
+            {
+              "Ref": "AWS::URLSuffix"
+            },
+            "/dev"
+          ]
+        ]
+      },
+      "Export": {
+        "Name": "sls-xteam-tgl-br-bot-dev-ServiceEndpoint"
+      }
+    }
+  }
+}
