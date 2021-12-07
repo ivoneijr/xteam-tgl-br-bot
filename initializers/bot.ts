@@ -32,7 +32,7 @@ bot.command('ping', ctx => {
 });
 
 bot.command('hello', ctx => {
-  return ctx.replyWithMarkdown('*world!*');
+  return ctx.replyWithMarkdown('*worldsssss!*');
 });
 
 bot.on('text', ctx => {
