@@ -183,7 +183,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/xteam-tgl-br-bot/dev/1638857502013-2021-12-07T06:11:42.013Z/xteam-tgl-br-bot.zip"
+                "S3Key": "serverless/xteam-tgl-br-bot/dev/1638858498500-2021-12-07T06:28:18.500Z/xteam-tgl-br-bot.zip"
               },
               "Handler": "functions/webhook.run",
               "Runtime": "nodejs12.x",
@@ -213,7 +213,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/xteam-tgl-br-bot/dev/1638857502013-2021-12-07T06:11:42.013Z/xteam-tgl-br-bot.zip"
+                "S3Key": "serverless/xteam-tgl-br-bot/dev/1638858498500-2021-12-07T06:28:18.500Z/xteam-tgl-br-bot.zip"
               },
               "Handler": "functions/setWebHook.run",
               "Runtime": "nodejs12.x",
@@ -236,24 +236,24 @@
               "SetDashwebhookLogGroup"
             ]
           },
-          "WebhookLambdaVersion4Sq6ErFgAE5bTYfSji3Wc6nPu0qjpFLEGy5D25dBU": {
+          "WebhookLambdaVersionWtf596xAbCi0Tn5eUx2BpC57Pm6rmO2seVNAEK5ejXk": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "WebhookLambdaFunction"
               },
-              "CodeSha256": "gK+p42uEMYi/fj+MG35muD+X3LkAAKCGfKKQQ8wdHy0="
+              "CodeSha256": "1Pn4PYR3vvo+CU0GsXSB1CoIOzuS0ddJSi1wcP6ii7Q="
             }
           },
-          "SetDashwebhookLambdaVersionsD7vVdA7nJJWZ9YLou4lxpbryUBZe765jmJ50NhmAVI": {
+          "SetDashwebhookLambdaVersionxepyIHGcwDWEDp80CHnur7FVIwNWYIRORLBFib1OW0": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "SetDashwebhookLambdaFunction"
               },
-              "CodeSha256": "gK+p42uEMYi/fj+MG35muD+X3LkAAKCGfKKQQ8wdHy0="
+              "CodeSha256": "1Pn4PYR3vvo+CU0GsXSB1CoIOzuS0ddJSi1wcP6ii7Q="
             }
           },
           "ApiGatewayRestApi": {
@@ -480,7 +480,7 @@
               "SetDashwebhookLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1638857495891": {
+          "ApiGatewayDeployment1638858491693": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -582,7 +582,7 @@
           "WebhookLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "WebhookLambdaVersion4Sq6ErFgAE5bTYfSji3Wc6nPu0qjpFLEGy5D25dBU"
+              "Ref": "WebhookLambdaVersionWtf596xAbCi0Tn5eUx2BpC57Pm6rmO2seVNAEK5ejXk"
             },
             "Export": {
               "Name": "sls-xteam-tgl-br-bot-dev-WebhookLambdaFunctionQualifiedArn"
@@ -591,7 +591,7 @@
           "SetDashwebhookLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "SetDashwebhookLambdaVersionsD7vVdA7nJJWZ9YLou4lxpbryUBZe765jmJ50NhmAVI"
+              "Ref": "SetDashwebhookLambdaVersionxepyIHGcwDWEDp80CHnur7FVIwNWYIRORLBFib1OW0"
             },
             "Export": {
               "Name": "sls-xteam-tgl-br-bot-dev-SetDashwebhookLambdaFunctionQualifiedArn"
@@ -753,7 +753,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "WebhookLambdaVersion4Sq6ErFgAE5bTYfSji3Wc6nPu0qjpFLEGy5D25dBU"
+        "versionLogicalId": "WebhookLambdaVersionWtf596xAbCi0Tn5eUx2BpC57Pm6rmO2seVNAEK5ejXk"
       },
       "set-webhook": {
         "handler": "functions/setWebHook.run",
@@ -794,7 +794,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "SetDashwebhookLambdaVersionsD7vVdA7nJJWZ9YLou4lxpbryUBZe765jmJ50NhmAVI"
+        "versionLogicalId": "SetDashwebhookLambdaVersionxepyIHGcwDWEDp80CHnur7FVIwNWYIRORLBFib1OW0"
       }
     },
     "configValidationMode": "warn",
@@ -819,7 +819,7 @@
     "artifact": "/Users/ivo/projects/github.com:ivoneijr/.build/.serverless/xteam-tgl-br-bot.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/xteam-tgl-br-bot/dev/1638857502013-2021-12-07T06:11:42.013Z",
+    "artifactDirectoryName": "serverless/xteam-tgl-br-bot/dev/1638858498500-2021-12-07T06:28:18.500Z",
     "artifact": "xteam-tgl-br-bot.zip"
   }
 }
