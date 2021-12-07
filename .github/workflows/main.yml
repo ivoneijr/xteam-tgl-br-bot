@@ -21,7 +21,7 @@ jobs:
 
       - name: install plugin
         uses: serverless/github-action@master
-        run: serverless plugin install -n serverless-plugin-typescript
+        - run: serverless plugin install -n serverless-plugin-typescript
 
       - name: serverless deploy
         uses: serverless/github-action@master
