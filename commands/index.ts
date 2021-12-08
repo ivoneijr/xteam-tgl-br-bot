@@ -3,22 +3,24 @@ import axios from 'axios';
 
 import { HELP_MESSAGE, INVOICE_MESSAGE, getMessage } from './messages';
 
-export const help = (ctx: Context) => {
-  return ctx.replyWithMarkdown(getMessage(HELP_MESSAGE));
+export const help = async (ctx: Context) => {
+  const message = await getMessage(HELP_MESSAGE);
+  return ctx.replyWithMarkdown(message);
 };
 
-export const whoAmI = (ctx: Context) => {
+export const whoAmI = async (ctx: Context) => {
   const userInfo = JSON.stringify(ctx.from);
 
   return ctx.reply(`User info: ${userInfo}`);
 };
 
-export const ping = (ctx: Context) => {
+export const ping = async (ctx: Context) => {
   return ctx.replyWithMarkdown('*Pong!*');
 };
 
-export const invoiceInfos = (ctx: Context) => {
-  return ctx.reply(getMessage(INVOICE_MESSAGE));
+export const invoiceInfos = async (ctx: Context) => {
+  const message = await getMessage(INVOICE_MESSAGE);
+  return ctx.reply(message);
 };
 
 export const usdToBrl = async (ctx: Context) => {
