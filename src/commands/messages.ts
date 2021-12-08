@@ -1,4 +1,4 @@
-import { commands } from '../initializers/definition';
+import { commands } from '../initializers/bot';
 
 export const HELP_MESSAGE = `HELP_MESSAGE`;
 export const INVOICE_MESSAGE = `INVOICE_MESSAGE`;
