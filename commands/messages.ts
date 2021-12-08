@@ -10,6 +10,8 @@ const messages = [
       /whoami - Informações sobre você.
       /help - Mostra essa mensagem.
       /invoice_infos - Mostra informações úteis para preenchimento de nfse para x-team.
+      /usdtobrl - Mostra cotação atual de USD para BRL.
+      /husky_limit - Mostra Informaçóes sobre limite de recebimento da husky.
     `,
   },
   {
@@ -26,7 +28,9 @@ const messages = [
 ];
 
 export const getMessage = (key: string): string => {
+  console.log('getMessage: ', getMessage);
   const message = messages.find(m => m.key === key);
+  console.log('message: ', message);
 
   return message ? message.value : '';
 };
