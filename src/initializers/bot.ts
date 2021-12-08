@@ -1,5 +1,6 @@
 import { Telegraf } from 'telegraf';
 import { Command } from '../types';
+
 import {
   help,
   whoAmI,
@@ -23,35 +24,35 @@ bot.start(ctx => {
 
 bot.help(help);
 
-export const commands = [
+const commands = [
   {
     command: 'ping',
     description: '*Pong!*',
-    runner: ping,
+    handler: ping,
   },
   {
     command: 'whoami',
     description: 'Informações sobre você.',
-    runner: whoAmI,
+    handler: whoAmI,
   },
   {
     command: 'invoice_infos',
     description:
       'Mostra informações úteis para preenchimento de nfse para x-team.',
-    runner: invoiceInfos,
+    handler: invoiceInfos,
   },
   {
     command: 'usdtobrl',
     description: 'Mostra cotação atual de USD para BRL.',
-    runner: usdToBrl,
+    handler: usdToBrl,
   },
   {
     command: 'husky_limit',
     description: 'Mostra Informaçóes sobre limite de recebimento da husky.',
-    runner: huskyLimit,
+    handler: huskyLimit,
   },
 ] as Command[];
 
-commands.forEach(command => {
-  bot.command(command.command, command.runner);
+commands.forEach(({ command, handler }) => {
+  bot.command(command, handler);
 });

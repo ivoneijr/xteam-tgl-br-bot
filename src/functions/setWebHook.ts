@@ -13,7 +13,13 @@ export const run = async (event: APIGatewayEvent) => {
   const webhookUrl = `https://${event.headers.Host}/${event.requestContext.stage}/webhook`;
 
   try {
-    await bot.telegram.setWebhook(webhookUrl);
+    // TODO: Refactor to avoid re-run yarn dev
+    if (process.env.NODE_ENV === 'development') {
+      bot.launch();
+    } else {
+      await bot.telegram.setWebhook(webhookUrl);
+    }
+
     response.statusCode = 200;
     response.body = JSON.stringify({ url: webhookUrl });
   } catch (err) {

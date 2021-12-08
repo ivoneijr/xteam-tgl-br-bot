@@ -12,10 +12,12 @@ provider:
 
 plugins:
   - serverless-plugin-typescript
+  - serverless-dotenv-plugin
+  - serverless-offline
 
 functions:
   webhook:
-    handler: functions/webhook.run
+    handler: src/functions/webhook.run
     events:
       - http:
           path: webhook
@@ -23,7 +25,7 @@ functions:
           cors: true
 
   set-webhook:
-    handler: functions/setWebHook.run
+    handler: src/functions/setWebHook.run
     events:
       - http:
           path: setWebhook

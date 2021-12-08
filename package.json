@@ -10,6 +10,9 @@
     "telegraf": "^4.4.2",
     "typescript": "^4.5.2"
   },
+  "scripts": {
+    "dev": "sls offline --httpPort 8443 --host localhost"
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.6.0",
     "@typescript-eslint/parser": "^5.6.0",
@@ -20,6 +23,8 @@
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.5.1",
+    "serverless-dotenv-plugin": "^3.10.0",
+    "serverless-offline": "^8.3.1",
     "serverless-plugin-typescript": "^2.1.0",
     "typescript": "^4.5.2"
   }
