@@ -1,5 +1,12 @@
 import { Telegraf } from 'telegraf';
-import { help, whoAmI, ping, invoiceInfos } from '../commands';
+import {
+  help,
+  whoAmI,
+  ping,
+  invoiceInfos,
+  usdToBrl,
+  huskyLimit,
+} from '../commands';
 
 export const bot = new Telegraf(process.env.BOT_TOKEN!, {
   telegram: { webhookReply: true },
@@ -18,3 +25,5 @@ bot.help(help);
 bot.command('whoami', whoAmI);
 bot.command('ping', ping);
 bot.command('invoice_infos', invoiceInfos);
+bot.command('usdtobrl', usdToBrl);
+bot.command('husky_limit', huskyLimit);

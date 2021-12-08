@@ -8,6 +8,7 @@ provider:
   lambdaHashingVersion: 20201221
   environment:
     BOT_TOKEN: ${env:BOT_TOKEN}
+    ECO_AWESOME_API: 'https://economia.awesomeapi.com.br/last'
 
 plugins:
   - serverless-plugin-typescript

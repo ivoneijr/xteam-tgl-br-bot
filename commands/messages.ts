@@ -8,7 +8,9 @@ const messages = [
       \n*Command reference:*
       /ping - *Pong!*
       /whoami - Informações sobre você.
-      /help - Mostra essa mensagem.`,
+      /help - Mostra essa mensagem.
+      /invoice_infos - Mostra informações úteis para preenchimento de nfse para x-team.
+    `,
   },
   {
     key: INVOICE_MESSAGE,
