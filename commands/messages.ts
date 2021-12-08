@@ -3,14 +3,20 @@ import { commands } from '../initializers/bot';
 export const HELP_MESSAGE = `HELP_MESSAGE`;
 export const INVOICE_MESSAGE = `INVOICE_MESSAGE`;
 
+const buildHelpMessage = () => {
+  const result = commands
+    .map(command => `/${command.command} - ${command.description}`)
+    .join('\n');
+
+  return result;
+};
+
 const messages = [
   {
     key: HELP_MESSAGE,
     value: `
       \n*Command reference:*
-      ${commands
-        .map(command => `/${command.command} - ${command.description}`)
-        .join('\n')}
+      ${buildHelpMessage()}
     `,
   },
   {
