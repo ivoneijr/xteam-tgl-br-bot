@@ -24,7 +24,7 @@ bot.start(ctx => {
 
 bot.help(help);
 
-export const commands = [
+export const commandList = [
   {
     command: 'ping',
     description: '*Pong!*',
@@ -53,6 +53,6 @@ export const commands = [
   },
 ] as Command[];
 
-commands.forEach(({ command, handler }) => {
+commandList.forEach(({ command, handler }) => {
   bot.command(command, handler);
 });

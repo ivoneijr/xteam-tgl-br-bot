@@ -1,23 +1,24 @@
-import { commands } from '../initializers/bot';
+import { commandList } from '../initializers/bot';
 
 export const HELP_MESSAGE = `HELP_MESSAGE`;
 export const INVOICE_MESSAGE = `INVOICE_MESSAGE`;
 export const HUSKY_LIMIT = `HUSKY_LIMIT`;
 
 const buildHelpMessage = (): string => {
-  return `${commands
+  return `${commandList
     .map(({ command, description }) => `\n/${command}: ${description}`)
     .join('')}`;
 };
 
-const messages = [
-  {
-    key: HELP_MESSAGE,
-    value: `\nComandos disponíveis: ${buildHelpMessage()}`,
-  },
-  {
-    key: INVOICE_MESSAGE,
-    value: `X-Team International Pty Ltd.
+export const getMessage = async (key: string): Promise<string> => {
+  const messages = [
+    {
+      key: HELP_MESSAGE,
+      value: `\nComandos disponíveis: ${buildHelpMessage()}`,
+    },
+    {
+      key: INVOICE_MESSAGE,
+      value: `X-Team International Pty Ltd.
     PO Box 537
     Chelsea, VIC 3196
     Australia
@@ -25,14 +26,13 @@ const messages = [
     Australia
     +1 863-225-4802
     contact@x-team.com`,
-  },
-  {
-    key: HUSKY_LIMIT,
-    value: `A husky oferece um limite inicial para recebimentos, se o seu limite está próximo de ser atingido, é recomendado que você entre na sua conta da husky e preencha o formulário de solicitação de aumento de limite, caso contrário seus dols vão ficar guardados com a lobinho. 🐺`,
-  },
-];
+    },
+    {
+      key: HUSKY_LIMIT,
+      value: `A husky oferece um limite inicial para recebimentos, se o seu limite está próximo de ser atingido, é recomendado que você entre na sua conta da husky e preencha o formulário de solicitação de aumento de limite, caso contrário seus dols vão ficar guardados com a lobinho. 🐺`,
+    },
+  ];
 
-export const getMessage = async (key: string): Promise<string> => {
   const message = messages.find(m => m.key === key);
   console.log('message: ', message);
 
