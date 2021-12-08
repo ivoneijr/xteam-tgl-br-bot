@@ -24,7 +24,7 @@ bot.start(ctx => {
 
 bot.help(help);
 
-const commands = [
+export const commands = [
   {
     command: 'ping',
     description: '*Pong!*',
