@@ -5,7 +5,7 @@ import { HELP_MESSAGE, INVOICE_MESSAGE, getMessage } from './messages';
 
 export const help = async (ctx: Context) => {
   const message = await getMessage(HELP_MESSAGE);
-  return ctx.replyWithMarkdown(message);
+  return ctx.reply(message);
 };
 
 export const whoAmI = async (ctx: Context) => {

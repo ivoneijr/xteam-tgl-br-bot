@@ -6,11 +6,11 @@ const messages = [
     key: HELP_MESSAGE,
     value: `
       \n*Command reference:*
-        /ping -  *Pong!*,
-        /whoami - Informações sobre você.,
-        /invoice_infos - Mostra informações úteis para preenchimento de nfse para x-team.,
-        /usdtobrl -  Mostra cotação atual de USD para BRL.,
-        /husky_limit - Mostra Informaçóes sobre limite de recebimento da husky.,
+        /ping -  *Pong!*
+        /whoami - Informações sobre você.
+        /invoice_infos - Mostra informações úteis para preenchimento de nfse para x-team.
+        /usdtobrl -  Mostra cotação atual de USD para BRL.
+        /husky_limit - Mostra Informaçóes sobre limite de recebimento da husky.
     `,
   },
   {
