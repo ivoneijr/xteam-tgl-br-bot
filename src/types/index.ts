@@ -1,5 +1,6 @@
+import { Context } from 'telegraf';
 export interface Command {
   command: string;
   description: string;
-  runner: any;
+  handler: (ctx: Context) => Promise<void>;
 }
