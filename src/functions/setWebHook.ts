@@ -13,6 +13,7 @@ export const run = async (event: APIGatewayEvent) => {
   const webhookUrl = `https://${event.headers.Host}/${event.requestContext.stage}/webhook`;
 
   try {
+    // TODO: Refactor to avoid re-run yarn dev
     if (process.env.NODE_ENV === 'development') {
       bot.launch();
     } else {
