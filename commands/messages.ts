@@ -1,22 +1,16 @@
-import { commands } from '../initializers/bot';
-
 export const HELP_MESSAGE = `HELP_MESSAGE`;
 export const INVOICE_MESSAGE = `INVOICE_MESSAGE`;
-
-const buildHelpMessage = () => {
-  const result = commands
-    .map(command => `/${command.command} - ${command.description}`)
-    .join('\n');
-
-  return result;
-};
 
 const messages = [
   {
     key: HELP_MESSAGE,
     value: `
       \n*Command reference:*
-      ${buildHelpMessage()}
+        /ping -  *Pong!*,
+        /whoami - Informações sobre você.,
+        /invoice_infos - Mostra informações úteis para preenchimento de nfse para x-team.,
+        /usdtobrl -  Mostra cotação atual de USD para BRL.,
+        /husky_limit - Mostra Informaçóes sobre limite de recebimento da husky.,
     `,
   },
   {
