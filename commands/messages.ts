@@ -28,7 +28,6 @@ const messages = [
 ];
 
 export const getMessage = async (key: string): Promise<string> => {
-  console.log('getMessage: ', getMessage);
   const message = messages.find(m => m.key === key);
   console.log('message: ', message);
 
