@@ -1,27 +1,5 @@
-import { Telegraf } from 'telegraf';
 import { Command } from '../types';
-import {
-  help,
-  whoAmI,
-  ping,
-  invoiceInfos,
-  usdToBrl,
-  huskyLimit,
-} from '../commands';
-
-export const bot = new Telegraf(process.env.BOT_TOKEN!, {
-  telegram: { webhookReply: true },
-});
-
-bot.start(ctx => {
-  return ctx.reply(
-    `Olá ${
-      ctx.from.first_name ? ctx.from.first_name : 'friend'
-    }! Use /help para ver os comandos disponíveis.`,
-  );
-});
-
-bot.help(help);
+import { whoAmI, ping, invoiceInfos, usdToBrl, huskyLimit } from '../commands';
 
 export const commands = [
   {
@@ -51,7 +29,3 @@ export const commands = [
     runner: huskyLimit,
   },
 ] as Command[];
-
-commands.forEach(command => {
-  bot.command(command.command, command.runner);
-});

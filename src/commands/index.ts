@@ -1,7 +1,12 @@
 import { Context } from 'telegraf';
 import axios from 'axios';
 
-import { HELP_MESSAGE, INVOICE_MESSAGE, getMessage } from './messages';
+import {
+  HELP_MESSAGE,
+  INVOICE_MESSAGE,
+  HUSKY_LIMIT,
+  getMessage,
+} from './messages';
 
 export const help = async (ctx: Context) => {
   const message = await getMessage(HELP_MESSAGE);
@@ -30,7 +35,7 @@ export const usdToBrl = async (ctx: Context) => {
 };
 
 export const huskyLimit = async (ctx: Context) => {
-  return ctx.reply(
-    `A husky oferece um limite inicial para recebimentos, se o seu limite está próximo de ser atingido, é recomendado que você entre na sua conta da husky e preencha o formulário de solicitação de aumento de limite, caso contrário seus dols vão ficar guardados com a lobinho. 🐺`,
-  );
+  const message = await getMessage(HUSKY_LIMIT);
+
+  return ctx.reply(message);
 };
