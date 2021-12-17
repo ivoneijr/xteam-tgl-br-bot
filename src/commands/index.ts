@@ -39,3 +39,9 @@ export const huskyLimit = async (ctx: Context) => {
 
   ctx.reply(message);
 };
+
+export const freeCoins = async (ctx: Context) => {
+  ctx.reply(
+    `Pegadinha do malandro, Rá IÉ IÉ !! Achou mesmo que seria fácil assim? :D`,
+  );
+};

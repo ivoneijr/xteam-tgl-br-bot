@@ -8,6 +8,7 @@ import {
   invoiceInfos,
   usdToBrl,
   huskyLimit,
+  freeCoins,
 } from '../commands';
 
 export const bot = new Telegraf(process.env.BOT_TOKEN!, {
@@ -25,11 +26,11 @@ bot.start(ctx => {
 bot.help(help);
 
 export const commandList = [
-  {
-    command: 'ping',
-    description: '*Pong!*',
-    handler: ping,
-  },
+  // {
+  //   command: 'ping',
+  //   description: '*Pong!*',
+  //   handler: ping,
+  // },
   {
     command: 'whoami',
     description: 'Informações sobre você.',
@@ -50,6 +51,12 @@ export const commandList = [
     command: 'husky_limit',
     description: 'Mostra Informaçóes sobre limite de recebimento da husky.',
     handler: huskyLimit,
+  },
+  {
+    command: 'free_coins',
+    description:
+      'Você ganha imediatamente 10 coins para gastar no vault. (só pode ser usado 1x)',
+    handler: freeCoins,
   },
 ] as Command[];
 
